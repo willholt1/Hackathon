@@ -14,6 +14,12 @@ import java.util.ArrayList;
 
 public class LocationClient {
 
+    /**
+     *
+     * @param lat
+     * @param lng
+     * @return
+     */
     public ArrayList<Station> getURL(Double lat, Double lng){
         //arraylist to store results in
         ArrayList<Station> stations = new ArrayList<Station>();
@@ -33,6 +39,11 @@ public class LocationClient {
         return stations;
     }
 
+    /**
+     *
+     * @param u
+     * @return
+     */
     private ArrayList<Station> runQuery(URL u){
         //run the query to the railway web service
         ArrayList<Station> stations = new ArrayList<Station>();

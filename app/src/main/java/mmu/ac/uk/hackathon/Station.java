@@ -2,7 +2,6 @@ package mmu.ac.uk.hackathon;
 
 import android.location.Location;
 
-import static android.location.Location.distanceBetween;
 
 public class Station {
 
@@ -12,14 +11,27 @@ public class Station {
     float distance;
 
     //setters
+
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @param latitude
+     */
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     *
+     * @param longitude
+     */
     public void setLongitude(Double longitude){
         this.longitude = longitude;
     }
@@ -40,18 +52,35 @@ public class Station {
     }
 
     //getters
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getLatitude() {
         return latitude;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getLongitude() {
         return longitude;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getDistance(){
         return distance;
     }

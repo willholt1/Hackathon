@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapboxMap map;
 
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ////////////////
     //MAPBOX STUFF//
     ////////////////
+
+    /**
+     *
+     * @param mapboxMap
+     */
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap){
         map = mapboxMap;
@@ -85,12 +94,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onStyleLoaded(@NonNull Style style) {
                         SymbolManager sm = new SymbolManager(mapView, map, style);
 
+                        //small black dot at your location
                         SymbolOptions symbolOptions = new SymbolOptions()
                                 .withLatLng(new LatLng(LocationVars.latitude,LocationVars.longitude))
                                 .withIconImage("marker-15")
                                 .withIconColor("black")
                                 .withIconSize(2.5f);
 
+                        //add the symbol to the map
                         Symbol symbol = sm.create(symbolOptions);
                     }
                 });
@@ -156,6 +167,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     //END OF MAPBOX STUFF//
     ///////////////////////
 
+    /**
+     *
+     * @param v
+     */
     public void onClickSearch(View v){
         //////////////////////////
         //PERMISSION CHECK STUFF//
@@ -230,7 +245,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
+    /**
+     *
+     * @param s
+     */
     private void displayResults(ArrayList<Station> s){
         //display the text results
         TextView txtview = findViewById(R.id.textView);
