@@ -14,24 +14,29 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
-import com.mapbox.mapboxsdk.camera.CameraUpdate;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
+
     private MapView mapView;
+    private MapboxMap map;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ////////////////
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap){
+        map = mapboxMap;
         //this is required
         mapboxMap.setStyle(Style.DARK);
 
@@ -64,10 +70,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         );
     }
 
+
+    //method to move the map to center around the current lat and long values
     public void recenterMap() {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
+                map = mapboxMap;
+                //puts a dot on the map where you are
+                mapboxMap.setStyle(Style.DARK, new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+                        SymbolManager sm = new SymbolManager(mapView, map, style);
+
+                        SymbolOptions symbolOptions = new SymbolOptions()
+                                .withLatLng(new LatLng(LocationVars.latitude,LocationVars.longitude))
+                                .withIconImage("marker-15")
+                                .withIconColor("white")
+                                .withIconSize(2f);
+
+                        Symbol symbol = sm.create(symbolOptions);
+                    }
+                });
+
                 //get the variables for the old camera position
                 CameraPosition old = mapboxMap.getCameraPosition();
 
