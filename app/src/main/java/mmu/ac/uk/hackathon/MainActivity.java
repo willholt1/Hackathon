@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +27,7 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
+import com.mapbox.mapboxsdk.utils.ColorUtils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -59,13 +61,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull MapboxMap mapboxMap){
         map = mapboxMap;
         //this is required
-        mapboxMap.setStyle(Style.DARK);
+        mapboxMap.setStyle(Style.OUTDOORS);
 
         //tells the map where to show
         mapboxMap.setCameraPosition(
                 new CameraPosition.Builder().
                         target(new LatLng(LocationVars.latitude,LocationVars.longitude))
-                        .zoom(11.0)
+                        .zoom(10.5)
                         .build()
         );
     }
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapReady(MapboxMap mapboxMap) {
                 map = mapboxMap;
                 //puts a dot on the map where you are
-                mapboxMap.setStyle(Style.DARK, new Style.OnStyleLoaded() {
+                mapboxMap.setStyle(Style.OUTDOORS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
                         SymbolManager sm = new SymbolManager(mapView, map, style);
@@ -86,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         SymbolOptions symbolOptions = new SymbolOptions()
                                 .withLatLng(new LatLng(LocationVars.latitude,LocationVars.longitude))
                                 .withIconImage("marker-15")
-                                .withIconColor("white")
-                                .withIconSize(2f);
+                                .withIconColor("black")
+                                .withIconSize(2.5f);
 
                         Symbol symbol = sm.create(symbolOptions);
                     }
