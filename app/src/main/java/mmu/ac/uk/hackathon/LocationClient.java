@@ -15,14 +15,16 @@ import java.util.ArrayList;
 public class LocationClient {
 
     public ArrayList<Station> getURL(Double lat, Double lng){
-        //TODO construct the URL
+        //arraylist to store results in
         ArrayList<Station> stations = new ArrayList<Station>();
         try{
+            //construct the URL
             URL u = new URL("http://10.0.2.2:8080/stations?lat="+lat+"&lng="+lng);
 
+            //put the results into the arraylist
             stations = this.runQuery(u);
 
-            //send the list of objects to onPostExecute
+            //send the list of objects back to the asyncTask
             return stations;
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -35,6 +37,7 @@ public class LocationClient {
         //TODO run the query to the railway web service
         ArrayList<Station> stations = new ArrayList<Station>();
         try {
+            //conect to the server
             HttpURLConnection c = (HttpURLConnection) u.openConnection();
             InputStreamReader isr = new InputStreamReader(c.getInputStream());
             BufferedReader in = new BufferedReader(isr);

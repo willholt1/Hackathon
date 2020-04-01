@@ -11,10 +11,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.TextView;
-
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             //that last permission must be > 0 or it fails silently
             System.exit(0);
         }else { //if it has permissions do this stuff:
+
             //get latitude and longitude and put them in variables
             LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onProviderDisabled(String provider) {}
             });
 
-            //TODO call asyncTask
+            //call asyncTask
             new runNetworking().execute();
 
         }
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //TODO AsyncTask Networking
+    //AsyncTask Networking
     public class runNetworking extends AsyncTask<String, Void, ArrayList<Station>>{
 
         @Override
@@ -87,8 +88,10 @@ public class MainActivity extends AppCompatActivity {
             LocationClient lc = new LocationClient();
             ArrayList<Station> stations = new ArrayList<Station>();
 
+            //call the getURL method from the location client which in turn puts all the data from the website into an arraylist of objects
             stations = lc.getURL(LocationVars.latitude, LocationVars.longitude);
 
+            //send the list of objects to onPostExecute
             return stations;
         }
 
@@ -100,11 +103,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void displayResults(ArrayList<Station> s){
-        //TODO display the text results
+        //display the text results
         TextView txtview = findViewById(R.id.textView);
         txtview.setText("");
+        //used to round the distance up in the format 00.00
+        DecimalFormat df = new DecimalFormat("00.00");
+        df.setRoundingMode(RoundingMode.UP);
+
         for(int i = 0; i < s.size(); i++){
-            txtview.append(s.get(i).getName()+ "\n");
+            //calculate the distance between the user and the station and then save it in the object
+            s.get(i).setDistance();
+            txtview.append(df.format(s.get(i).getDistance()) +" km  to" +s.get(i).getName()+ "\n");
         }
     }
 }
