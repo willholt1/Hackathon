@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this is a test
-        //this is another test
     }
 
     public void onClickSearch(View v){
@@ -46,7 +49,29 @@ public class MainActivity extends AppCompatActivity {
         }else { //if it has permissions do this stuff:
             //TODO
 
+            //get latitude and longitude and put them in variables
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    LocationVars.latitude = location.getLatitude();
+                    LocationVars.longitude = location.getLongitude();
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+                @Override
+                public void onProviderEnabled(String provider) {}
+                @Override
+                public void onProviderDisabled(String provider) {}
+            });
+
+            TextView txtview = findViewById(R.id.textView);
+
+            txtview.append(LocationVars.latitude+"xxxxxxx"+LocationVars.longitude+"[][][]");
+
 
         }
     }
 }
+
