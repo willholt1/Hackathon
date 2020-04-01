@@ -2,4 +2,5 @@
     <string name="app_name">Hackathon</string>
     <string name="search">Search</string>
     <string name="blank"></string>
+    <string name="access_token">pk.eyJ1Ijoid2lsbC1ob2x0IiwiYSI6ImNrOGhnMWdhdDAwYzkzbG83cWlhaG1qbW0ifQ.yp3K5myjJCkf1k-TsDcwIw</string>
 </resources>

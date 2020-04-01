@@ -34,7 +34,7 @@ public class LocationClient {
     }
 
     private ArrayList<Station> runQuery(URL u){
-        //TODO run the query to the railway web service
+        //run the query to the railway web service
         ArrayList<Station> stations = new ArrayList<Station>();
         try {
             //conect to the server
