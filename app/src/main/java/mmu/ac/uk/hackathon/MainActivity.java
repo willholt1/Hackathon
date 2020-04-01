@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < s.size(); i++){
             //calculate the distance between the user and the station and then save it in the object
             s.get(i).setDistance();
-            txtview.append(df.format(s.get(i).getDistance()) +" km  to" +s.get(i).getName()+ "\n");
+            txtview.append(df.format(s.get(i).getDistance()) +" km  to  " +s.get(i).getName()+ "\n");
         }
     }
 }
